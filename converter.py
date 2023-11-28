@@ -12,11 +12,18 @@ def get_in_minutes(sec):
     else:
         return f"{minutes:02d}:{seconds:02d}"
 
-def transcribe_video(file_path, output_directory, model_size="large-v2", language="pt", compute_type="float16"):
+def transcribe_video(file_path, output_directory, model_size="large-v3", language="pt"):
+    # Run on GPU with FP16
+    #model = WhisperModel(model_size, device="cuda", compute_type="float16")
+
+    # or run on GPU with INT8
+    # model = WhisperModel(model_size, device="cuda", compute_type="int8_float16")
+    # or run on CPU with INT8
+    # model = WhisperModel(model_size, device="cpu", compute_type="int8")
     try:
         with open(file_path, 'rb') as file:
             file_path = Path(file_path)
-            model = WhisperModel(model_size, device="cuda", compute_type=compute_type)
+            model = WhisperModel(model_size, device="cpu", compute_type="int8")
 
             output_file_path = Path(output_directory) / f"{file_path.stem}_output.txt"
 
@@ -41,7 +48,6 @@ def main():
     parser.add_argument("-o", "--output_directory", help="Caminho para o diretório de saída (opcional)")
     parser.add_argument("-m", "--model_size", default="large-v2", help="Tamanho do modelo (padrão: large-v2)")
     parser.add_argument("-l", "--language", default="pt", help="Idioma do vídeo (padrão: pt)")
-    parser.add_argument("-c", "--compute_type", default="float16", help="Tipo de cálculo (padrão: float16)")
 
     args = parser.parse_args()
     file_path = args.file_path
@@ -57,7 +63,7 @@ def main():
     if not os.path.exists(output_directory):
         os.makedirs(output_directory)  # Cria o diretório de saída se não existir
 
-    transcribe_video(file_path, output_directory, args.model_size, args.language, args.compute_type)
+    transcribe_video(file_path, output_directory, args.model_size, args.language)
 
 if __name__ == "__main__":
     main()
