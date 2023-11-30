@@ -3,6 +3,7 @@ from faster_whisper import WhisperModel
 import argparse
 import os
 
+
 def get_in_minutes(sec):
     hours = int(sec // 3600)
     minutes = int((sec % 3600) // 60)
@@ -12,9 +13,10 @@ def get_in_minutes(sec):
     else:
         return f"{minutes:02d}:{seconds:02d}"
 
+
 def transcribe_video(file_path, output_directory, model_size="large-v3", language="pt"):
     # Run on GPU with FP16
-    #model = WhisperModel(model_size, device="cuda", compute_type="float16")
+    # model = WhisperModel(model_size, device="cuda", compute_type="float16")
 
     # or run on GPU with INT8
     # model = WhisperModel(model_size, device="cuda", compute_type="int8_float16")
@@ -29,7 +31,8 @@ def transcribe_video(file_path, output_directory, model_size="large-v3", languag
 
             with open(output_file_path, 'w', encoding='utf-8') as output_file:
                 segments, info = model.transcribe(
-                    file, beam_size=5, language=language, best_of=2, vad_filter=True, vad_parameters=dict(min_silence_duration_ms=2000))
+                    file, beam_size=5, language=language, best_of=2, vad_filter=True,
+                    vad_parameters=dict(min_silence_duration_ms=2000))
 
                 print(f"Detected language '{info.language}' with probability {info.language_probability}\n")
 
@@ -41,6 +44,7 @@ def transcribe_video(file_path, output_directory, model_size="large-v3", languag
 
     except Exception as e:
         print(f"Ocorreu um erro ao transcrever o vídeo: {e}")
+
 
 def main():
     parser = argparse.ArgumentParser(description="Transcreve um vídeo usando o modelo Whisper")
@@ -64,6 +68,7 @@ def main():
         os.makedirs(output_directory)  # Cria o diretório de saída se não existir
 
     transcribe_video(file_path, output_directory, args.model_size, args.language)
+
 
 if __name__ == "__main__":
     main()

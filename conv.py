@@ -3,6 +3,7 @@ import base64
 import mimetypes
 import os
 
+
 def convert_image_to_base64(image_path, mime_type=None):
     try:
         with open(image_path, "rb") as image_file:
@@ -18,6 +19,7 @@ def convert_image_to_base64(image_path, mime_type=None):
     except Exception as e:
         print(f"Ocorreu um erro ao converter a imagem para base64: {e}")
         return None
+
 
 def main():
     parser = argparse.ArgumentParser(description="Converte uma imagem para base64")
@@ -36,6 +38,7 @@ def main():
 
     if image_base64:
         print(image_base64)
+
 
 if __name__ == "__main__":
     main()

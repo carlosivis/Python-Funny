@@ -9,6 +9,7 @@ except ImportError:
     os.system("pip install python-docx")
     from docx import Document
 
+
 def identify_abbreviations(file_path):
     abbreviations = set()
 
@@ -33,6 +34,7 @@ def identify_abbreviations(file_path):
 
     return abbreviations
 
+
 def save_abbreviations_to_file(abbreviations):
     # Obtém o diretório do script atual
     script_dir = os.path.dirname(os.path.realpath(__file__))
@@ -45,11 +47,14 @@ def save_abbreviations_to_file(abbreviations):
         for abbreviation, meaning in abbreviations:
             file.write(f"{abbreviation}: {meaning}\n")
 
+
 def parse_arguments():
-    parser = argparse.ArgumentParser(description="Identificar abreviações em um arquivo .docx e salvar em um arquivo de saída")
+    parser = argparse.ArgumentParser(
+        description="Identificar abreviações em um arquivo .docx e salvar em um arquivo de saída")
     parser.add_argument("file_path", help="Caminho para o arquivo .docx")
     parser.add_argument("-o", "--output_file", help="Caminho para o arquivo de saída (txt) onde as siglas serão salvas")
     return parser.parse_args()
+
 
 def main():
     args = parse_arguments()
@@ -60,11 +65,12 @@ def main():
     if abbreviations:
         for abbreviation, meaning in abbreviations:
             print(f"{abbreviation}: {meaning}")
-    
+
         save_abbreviations_to_file(abbreviations)
 
     else:
         print("Nenhuma abreviação encontrada no arquivo.")
+
 
 if __name__ == "__main__":
     main()
