@@ -1,6 +1,6 @@
 import openpyxl
 import random
-import pandas as pd  # New import for date range functionality
+import pandas as pd
 
 
 def gen_sheet(filename, headers, data):
@@ -26,8 +26,8 @@ def gen_points_name(qtd):
 
 def gen_random_data(points, headers, qtd, start_date, end_date):
     data = []
-    date_range = pd.date_range(start_date, end_date)  # Generate evenly spaced dates
-    date_iter = iter(date_range)  # Create an iterator for efficient date retrieval
+    date_range = pd.date_range(start_date, end_date)
+    date_iter = iter(date_range)
 
     for point in points:
         for _ in range(qtd):
@@ -58,6 +58,7 @@ def gen_random_data(points, headers, qtd, start_date, end_date):
     return data
 
 
+#Header can be changed to ur neccesity, try like: "header  name": (x,y) also: x is lower_limit and y is upper_limit
 headers = {
     "Ponto": None,
     "Data": None,
