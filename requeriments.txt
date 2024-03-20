@@ -1,3 +1,5 @@
 faster-whisper
 python-docx
 openpyxl
+requests
+pandas
