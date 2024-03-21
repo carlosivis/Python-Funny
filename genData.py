@@ -26,10 +26,10 @@ def gen_points_name(qtd):
 
 def gen_random_data(points, headers, qtd, start_date, end_date):
     data = []
-    date_range = pd.date_range(start_date, end_date)
-    date_iter = iter(date_range)
 
     for point in points:
+        date_range = pd.date_range(start_date, end_date)
+        date_iter = iter(date_range)
         for _ in range(qtd):
             try:
                 date = next(date_iter)  # Get the next date from the iterator
@@ -74,5 +74,5 @@ headers = {
 }
 
 points = gen_points_name(10)
-data = gen_random_data(points, headers, 500,"2000-01-01","2024-01-30")
+data = gen_random_data(points, headers, 500,"2020-01-01","2024-01-30")
 gen_sheet("dados_with_10%_outlier.xlsx", headers, data)
